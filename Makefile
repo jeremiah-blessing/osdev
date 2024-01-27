@@ -13,4 +13,7 @@ $(BUILD_DIR)/main.bin: $(SRC_DIR)/main.asm
 	@echo "┌────────────┐"
 	@echo "│  Assembly  │"
 	@echo "└────────────┘"
+	mkdir -p $(BUILD_DIR)
 	$(ASM) $(SRC_DIR)/main.asm -f bin -o $(BUILD_DIR)/main.bin
+clean:
+	@rm -rf $(BUILD_DIR)
