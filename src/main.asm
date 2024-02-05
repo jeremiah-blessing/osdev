@@ -1,28 +1,49 @@
-[org 0x7c00]
-	xor ax, ax	; AX -> 0
-	mov ds, ax	; DS -> 0
-	cld
+org 0x7c00
+bits 16
 
-	mov si, msg
-	call bios_print
-	
-hang:
-	jmp hang
+%define ENDL 0x0D, 0x0A
 
-bios_print:
+start:
+	jmp main
+
+
+
+puts:
+	push si
+	push ax
+.loop
 	lodsb		; Load DS:SI in AL and increment SI automatically (due to cld)  
 	or al, al	; Zero - End of Str
-	jz done		; Get out
+	jz .done		; Get out
+
 	mov ah, 0xE
 	mov bh, 0
 	int 0x10
-	jmp bios_print
-
-done:
+	jmp .loop
+.done:
+	pop ax
+	pop si
 	ret
 
+main:
+	; Setup Data Segments
+	xor ax, ax	; AX -> 0
+	mov ds, ax	; DS -> 0
+	mov es, ax 	; ES -> 0
+	
+	; Setup Stack
+	mov ss, ax
+	mov sp, 0x7c00
+
+	mov si, msg
+	call puts
+
+	jmp .halt
+.halt:
+	jmp .halt
+
 msg:
-	db "Hello, World!", 13, 10, 0
+	db "Hello, World!", ENDL, 0
 
 
 times 510-($-$$) db 0
