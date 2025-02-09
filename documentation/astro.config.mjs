@@ -25,4 +25,6 @@ export default defineConfig({
 			],
 		}),
 	],
+	base : "/osdev",
+	site : "https://jeremiah-blessing.github.io"
 });
