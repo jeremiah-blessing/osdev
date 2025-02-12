@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	markdown : {syntaxHighlight  :"prism"},
 	integrations: [
 		starlight({
 			title: 'OSDev',
