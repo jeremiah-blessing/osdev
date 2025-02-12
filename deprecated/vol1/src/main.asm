@@ -11,7 +11,7 @@ start:
 puts:
 	push si
 	push ax
-.loop
+.loop:
 	lodsb		; Load DS:SI in AL and increment SI automatically (due to cld)  
 	or al, al	; Zero - End of Str
 	jz .done		; Get out
